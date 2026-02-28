@@ -1,0 +1,54 @@
+services:
+  nginx:
+    image: nginx:1.20.1
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "9001:9001"
+      - "15672:15672"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - engine
+      - frontend
+    restart: unless-stopped
+  frontend:
+    image: audio-transcriber-frontend:beta
+    container_name: frontend
+    restart: unless-stopped
+  backend:
+    image: audio-transcriber-backend:beta
+    container_name: backend
+    env_file:
+      - .env.backend
+    volumes:
+      - backend_logs:/opt/app/logs
+    depends_on:
+      - minio
+      - rabbitmq
+    restart: unless-stopped
+  engine:
+    image: audio-transcriber-engine:beta
+    container_name: engine
+    env_file:
+      - .env.engine
+    volumes:
+      - engine_logs:/opt/app/logs
+    depends_on:
+      - minio
+      - rabbitmq
+    restart: unless-stopped
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+  rabbitmq:
+    image: rabbitmq:4.2.3-management
+    container_name: rabbitmq
+    restart: unless-stopped
+
+volumes:
+  backend_logs:
+  engine_logs:
