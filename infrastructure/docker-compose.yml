@@ -16,7 +16,7 @@ services:
     volumes:
       - registry_data:/var/lib/registry
   github_runner:
-    image: ghcr.io/actions/runner:latest
+    image: myoung34/github-runner:latest
     container_name: github_runner
     restart: unless-stopped
     env_file:
