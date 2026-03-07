@@ -15,11 +15,13 @@ services:
       - frontend
     restart: unless-stopped
   frontend:
-    image: audio-transcriber-frontend:beta
+    image: ghcr.io/audio-transcriber/engine:latest
+    pull_policy: always
     container_name: frontend
     restart: unless-stopped
   backend:
-    image: audio-transcriber-backend:beta
+    image: ghcr.io/audio-transcriber/backend:latest
+    pull_policy: always
     container_name: backend
     env_file:
       - .env.backend
@@ -30,7 +32,7 @@ services:
       - rabbitmq
     restart: unless-stopped
   engine:
-    image: audio-transcriber-engine:beta
+    image: ghcr.io/audio-transcriber/engine:latest
     container_name: engine
     env_file:
       - .env.engine
