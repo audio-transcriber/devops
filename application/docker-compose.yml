@@ -1,0 +1,33 @@
+services:
+  frontend:
+    image: ghcr.io/audio-transcriber/frontend:latest
+    pull_policy: always
+    container_name: frontend
+    restart: unless-stopped
+  backend:
+    image: registry.audio-transcriber.ru/backend:latest
+    pull_policy: always
+    container_name: backend
+    env_file:
+      - .env.backend
+    volumes:
+      - backend_logs:/opt/app/logs
+    restart: unless-stopped
+  engine:
+    image: ghcr.io/audio-transcriber/engine:latest
+    pull_policy: never
+    container_name: engine
+    env_file:
+      - .env.engine
+    volumes:
+      - engine_logs:/opt/app/logs
+    restart: unless-stopped
+
+volumes:
+  backend_logs:
+  engine_logs:
+
+networks:
+  default:
+    external: true
+    name: audio-transcriber-network
