@@ -1,3 +1,4 @@
 .idea/
+.env
 .env.backend
 .env.engine

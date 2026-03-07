@@ -15,6 +15,15 @@ services:
     container_name: registry
     volumes:
       - registry_data:/var/lib/registry
+  github_runner:
+    image: ghcr.io/actions/runner:latest
+    container_name: github_runner
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - runner_workdir:/tmp/_work
   minio:
     image: quay.io/minio/minio
     container_name: minio
@@ -27,6 +36,7 @@ services:
 
 volumes:
   registry_data:
+  runner_workdir:
 
 networks:
   default:
