@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
   engine:
     image: ghcr.io/audio-transcriber/engine:latest
-    pull_policy: never
+    pull_policy: always
     container_name: engine
     env_file:
       - .env.engine
