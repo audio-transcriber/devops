@@ -10,6 +10,11 @@ services:
       - /var/www/certbot:/var/www/certbot:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
     restart: unless-stopped
+  registry:
+    image: registry:2
+    container_name: registry
+    volumes:
+      - registry_data:/var/lib/registry
   minio:
     image: quay.io/minio/minio
     container_name: minio
