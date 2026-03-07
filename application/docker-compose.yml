@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: ghcr.io/audio-transcriber/frontend:latest
+    image: registry.audio-transcriber.ru/frontend:latest
     pull_policy: always
     container_name: frontend
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
       - backend_logs:/opt/app/logs
     restart: unless-stopped
   engine:
-    image: ghcr.io/audio-transcriber/engine:latest
+    image: registry.audio-transcriber.ru/engine:latest
     pull_policy: always
     container_name: engine
     env_file:
